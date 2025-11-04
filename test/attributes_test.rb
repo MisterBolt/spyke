@@ -134,10 +134,11 @@ module Spyke
     end
 
     def test_converting_files_to_faraday_io
-      Faraday::Multipart::FilePart.stubs(:new).with('/photo.jpg', 'image/jpeg').returns('UploadIO')
+      Faraday::Multipart::FilePart.stubs(:new).with('/photo.jpg', 'image/jpeg', 'photo.jpg').returns('UploadIO')
       file = mock
       file.stubs(:path).returns('/photo.jpg')
       file.stubs(:content_type).returns('image/jpeg')
+      file.stubs(:original_filename).returns('photo.jpg')
 
       recipe = Recipe.new(image: Image.new(file: file))
 
